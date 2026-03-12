@@ -1,13 +1,9 @@
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Utility class containing tree traversal algorithms for a {@link BinaryTree}.
- *
- * <p>Your task: implement each of the four traversal methods below.
- * Each method must visit every node in the tree exactly once and return
- * the node values collected in the order defined by the traversal.
- *
- * <p>Do NOT modify the method signatures.
  */
 public class TreeTraversals {
 
@@ -20,9 +16,15 @@ public class TreeTraversals {
      * @param node   the root of the subtree to traverse (may be {@code null})
      * @param result the list to append visited values to (never {@code null})
      */
+
     public static <V> void preorder(BinaryTree<V> node, List<V> result) {
-        // TODO: implement pre-order traversal
-        throw new UnsupportedOperationException("preorder: not yet implemented");
+        if (node == null) {
+            return;
+        }
+        
+        result.add(node.getValue());
+        preorder(node.getLeft(), result);
+        preorder(node.getRight(), result);
     }
 
     /**
@@ -35,8 +37,13 @@ public class TreeTraversals {
      * @param result the list to append visited values to (never {@code null})
      */
     public static <V> void inorder(BinaryTree<V> node, List<V> result) {
-        // TODO: implement in-order traversal
-        throw new UnsupportedOperationException("inorder: not yet implemented");
+        if (node == null) {
+            return;
+        }
+        
+        inorder(node.getLeft(), result);
+        result.add(node.getValue());
+        inorder(node.getRight(), result);
     }
 
     /**
@@ -49,10 +56,15 @@ public class TreeTraversals {
      * @param result the list to append visited values to (never {@code null})
      */
     public static <V> void postorder(BinaryTree<V> node, List<V> result) {
-        // TODO: implement post-order traversal
-        throw new UnsupportedOperationException("postorder: not yet implemented");
+        if (node == null) {
+            return;
+        }
+        
+        postorder(node.getLeft(), result);
+        postorder(node.getRight(), result);
+        result.add(node.getValue());
     }
-
+    
     /**
      * Performs a level-order (breadth-first) traversal of the subtree rooted at {@code node}.
      *
@@ -65,7 +77,24 @@ public class TreeTraversals {
      * @param result the list to append visited values to (never {@code null})
      */
     public static <V> void levelorder(BinaryTree<V> node, List<V> result) {
-        // TODO: implement level-order traversal
-        throw new UnsupportedOperationException("levelorder: not yet implemented");
+        if (node == null) {
+            return;
+        }
+
+        Queue<BinaryTree<V>> queue = new LinkedList<>();
+        queue.add(node);
+
+        while (!queue.isEmpty()) {
+            BinaryTree<V> current = queue.poll();
+            
+            result.add(current.getValue());
+
+            if (current.getLeft() != null) {
+                queue.add(current.getLeft());
+            }
+            if (current.getRight() != null) {
+                queue.add(current.getRight());
+            }
+        }
     }
 }
